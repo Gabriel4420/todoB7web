@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import * as C from './App.styles'
-import AddArea from './components/AddArea'
+import { AddArea } from './components/AddArea'
 import ListItem from './components/ListItem'
 import { Item } from './types/Item'
 
@@ -10,14 +10,34 @@ const App = () => {
     { id: 2, name: 'Comprar Bolo', done: true },
   ])
 
+  const handleAddTask = (taskName: string) => {
+    let newList = [...list]
+    newList.push({
+      id: list.length + 1,
+      name: taskName,
+      done: false,
+    })
+    setList(newList)
+  }
+
+  // Função feita para tarefinha de casa.
+  const handleTaskChange = (id: number, done: boolean) => {
+    let newList = [...list]
+    for (let i in newList) {
+      if (newList[i].id === id) {
+        newList[i].done = done
+      }
+    }
+    setList(newList)
+  }
   return (
     <C.Container>
       <C.Area>
         <C.Header>Lista de Tarefas</C.Header>
 
-        <AddArea></AddArea>
+        <AddArea onEnter={handleAddTask}></AddArea>
         {list.map((item, index) => (
-          <ListItem key={index} item={item} />
+          <ListItem key={index} item={item} onChange={handleTaskChange} />
         ))}
       </C.Area>
     </C.Container>

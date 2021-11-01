@@ -2,10 +2,11 @@ import { useState } from 'react'
 import * as C from './styles'
 import { Item } from '../../types/Item'
 type Props = {
-  item: Item
+  item: Item,
+  onChange: (id: number, done: boolean) => void
 }
 
-const ListItem = ({ item }: Props) => {
+const ListItem = ({ item, onChange }: Props) => {
   const [isChecked, setIsChecked] = useState(item.done)
   return (
     <C.Container done={isChecked}>
